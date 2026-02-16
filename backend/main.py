@@ -1,6 +1,5 @@
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
-import minsearch
 import sqlite3
 from typing import List
 import pickle
