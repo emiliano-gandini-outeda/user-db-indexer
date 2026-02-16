@@ -25,8 +25,8 @@ RUN npm run build
 # Instala backend
 # -----------------------------
 WORKDIR /app/backend
-RUN python -m venv venv
-RUN /bin/bash -c "source venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt"
+COPY pyproject.toml . 
+RUN pip install --no-cache-dir uv && uv sync
 
 # Exponer puerto del backend
 EXPOSE 8000
@@ -35,4 +35,4 @@ EXPOSE 8000
 # CMD: Ejecuta backend con uvicorn
 # -----------------------------
 WORKDIR /app
-CMD ["/bin/bash", "-c", "source backend/venv/bin/activate && uvicorn backend.main:app --host 0.0.0.0 --port 8000"]
+CMD ["uv", "run", "uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
