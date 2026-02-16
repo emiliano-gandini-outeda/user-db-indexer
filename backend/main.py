@@ -3,7 +3,18 @@ from fastapi.middleware.cors import CORSMiddleware
 import sqlite3
 from typing import List
 import os
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+import os
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FRONTEND_DIST = os.path.join(BASE_DIR, "frontend", "dist")
+
+app.mount("/assets", StaticFiles(directory=os.path.join(FRONTEND_DIST, "assets")), name="assets")
+
+@app.get("/")
+def serve_spa():
+    return FileResponse(os.path.join(FRONTEND_DIST, "index.html"))
 app = FastAPI()
 
 app.add_middleware(
@@ -14,7 +25,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 DB_PATH = os.path.join(BASE_DIR, "usuarios.db")
 
 
@@ -23,10 +34,6 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
-
-@app.get("/")
-def root():
-    return {"message": "API de usuarios"}
 
 
 @app.get("/users", response_model=List[dict])
@@ -43,7 +50,7 @@ def get_all_users(limit: int = Query(50000, ge=1, le=50000)):
     ]
 
 
-@app.get("/search", response_model=List[dict])
+@app.get("/api/search", response_model=List[dict])
 def search_users(
     q: str = Query("", description="Búsqueda general"),
     limit: int = Query(50000, ge=1, le=50000),
