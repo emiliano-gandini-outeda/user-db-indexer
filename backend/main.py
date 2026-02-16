@@ -28,10 +28,7 @@ def get_db_connection():
 
 
 def load_index():
-    if os.path.exists(INDEX_FILE):
-        print(f"Cargando índice desde {INDEX_FILE}...")
-        with open(INDEX_FILE, "rb") as f:
-            return pickle.load(f)
+
 
     print("Índice no encontrado, cargando usuarios...")
     conn = get_db_connection()
