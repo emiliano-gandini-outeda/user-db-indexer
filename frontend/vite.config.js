@@ -15,6 +15,10 @@ export default defineConfig({
       '/search': {
         target: 'http://localhost:8000',
         changeOrigin: true
+      },
+      '/users': {
+        target: 'http://localhost:8000',
+        changeOrigin: true
       }
     }
   }
