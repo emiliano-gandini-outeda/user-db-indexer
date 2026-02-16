@@ -15,8 +15,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DB_PATH = "/home/eclipse/Documents/GitHub/user-db-indexer/usuarios.db"
-INDEX_FILE = "/home/eclipse/Documents/GitHub/user-db-indexer/search_index.pkl"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+DB_PATH = os.path.join(BASE_DIR, "usuarios.db")
+INDEX_FILE = os.path.join(BASE_DIR, "search_index.pkl")
 
 
 def get_db_connection():
