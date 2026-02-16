@@ -17,7 +17,6 @@ app.mount("/assets", StaticFiles(directory=os.path.join(FRONTEND_DIST, "assets")
 @app.get("/")
 def serve_spa():
     return FileResponse(os.path.join(FRONTEND_DIST, "index.html"))
-app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
